@@ -1,13 +1,31 @@
+<script setup>
+import {ref} from 'vue';
+import { provide } from 'vue'
+
+
+const activeTab = ref('Vue')
+provide('tab-key', activeTab)
+
+const handleActiveTab = (val) =>{
+  activeTab.value = val;
+
+}
+
+</script>
+
 <template>
   <div class="tabs">
     <div class="tab-trigger-wrapper">
-      <!--
-        This should not be hardcoded but dynamic based on 
-        the title of each of the <Tab> components based in the slot
-      -->
-      <button class="tab-trigger active">Vue</button>
-      <button class="tab-trigger">React</button>
-      <button class="tab-trigger">Svelte</button>
+      <button 
+        v-for="item in ['Vue.js','React','Svelte']"
+        :key="item"
+        class="tab-trigger"
+        :class="{ active: activeTab == item }"
+        @click="handleActiveTab(item)"
+      >
+        {{item}}
+      </button>
+      
     </div>
     <div class="tab-content-wrapper">
       <slot></slot>
